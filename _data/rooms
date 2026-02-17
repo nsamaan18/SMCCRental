@@ -1,1 +1,46 @@
+- id: hall
+  name: "Main Hall"
+  subtitle: "Large events, receptions, performances"
+  capacity:
+    seated: 220
+    standing: 300
+  dimensions: "Approx. 2,800 sq ft"
+  images:
+    - /Pages/SMCC/Images/rooms/main-hall-1.jpg
+  amenities:
+    - "Stage"
+    - "PA / speakers (optional)"
+    - "Projector / screen (optional)"
+    - "Tables & chairs"
+    - "Wheelchair accessible"
+  rates:
+    - label: "Community rate"
+      price: "$___ / hour"
+      min_hours: 3
+    - label: "Private rate"
+      price: "$___ / hour"
+      min_hours: 4
+  deposit: "$___"
+  setup_fee: "$___ (if applicable)"
+  notes:
+    - "No alcohol unless approved and licensed."
+    - "Kitchen access optional."
+  featured: true
 
+- id: meeting-a
+  name: "Meeting Room A"
+  subtitle: "Meetings, classes, small workshops"
+  capacity:
+    seated: 25
+  dimensions: "Approx. 350 sq ft"
+  images:
+    - /Pages/SMCC/Images/rooms/meeting-a-1.jpg
+  amenities:
+    - "Whiteboard"
+    - "TV / HDMI"
+    - "Tables & chairs"
+  rates:
+    - label: "Standard rate"
+      price: "$___ / hour"
+      min_hours: 2
+  featured: false
