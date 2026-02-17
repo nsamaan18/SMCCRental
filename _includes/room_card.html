@@ -1,0 +1,52 @@
+
+{%- assign r = include.room -%}
+<article class="room-card">
+  <div class="room-media">
+    {%- if r.images and r.images.size > 0 -%}
+      <img src="{{ r.images[0] | relative_url }}" alt="{{ r.name | escape }}">
+    {%- else -%}
+      <div class="room-media-fallback">Photo coming soon</div>
+    {%- endif -%}
+  </div>
+
+  <div class="room-body">
+    <h3 class="room-title">{{ r.name }}</h3>
+    {%- if r.subtitle -%}<div class="room-subtitle">{{ r.subtitle }}</div>{%- endif -%}
+
+    <div class="room-meta">
+      {%- if r.capacity.seated -%}
+        <span><strong>Seated:</strong> {{ r.capacity.seated }}</span>
+      {%- endif -%}
+      {%- if r.capacity.standing -%}
+        <span><strong>Standing:</strong> {{ r.capacity.standing }}</span>
+      {%- endif -%}
+      {%- if r.dimensions -%}
+        <span><strong>Size:</strong> {{ r.dimensions }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if r.amenities and r.amenities.size > 0 -%}
+      <ul class="room-amenities">
+        {%- for a in r.amenities -%}
+          <li>{{ a }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if r.rates and r.rates.size > 0 -%}
+      <div class="room-rates">
+        {%- for rate in r.rates -%}
+          <div class="rate-line">
+            <span class="rate-label">{{ rate.label }}</span>
+            <span class="rate-price">{{ rate.price }}</span>
+            {%- if rate.min_hours -%}<span class="rate-min">min {{ rate.min_hours }}h</span>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="room-actions">
+      <a class="btn-room" href="#rental-request" data-room="{{ r.name | escape }}">Request this room</a>
+    </div>
+  </div>
+</article>
