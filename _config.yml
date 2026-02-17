@@ -1,1 +1,10 @@
+title: SMCC
+description: St. Mary Community Centre
+baseurl: ""
+url: "https://your-domain.org"
+
+markdown: kramdown
+theme: null
+
+permalink: pretty
 
