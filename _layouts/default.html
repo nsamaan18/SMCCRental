@@ -4,16 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>SMCC | {{ page.title }}</title>
+  <title>{{ page.title }} | SMCC</title>
 
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 
 <body>
 
-{% include header.html %}
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo">SMCC</div>
+    <nav>
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ '/about/' | relative_url }}">About</a>
+      <a href="{{ '/community/' | relative_url }}">Community</a>
+      <a href="{{ '/rental/' | relative_url }}">Room Rental</a>
+      <a href="{{ '/media/' | relative_url }}">Media</a>
+      <a href="{{ '/donate/' | relative_url }}">Donate</a>
+      <a href="{{ '/contact/' | relative_url }}">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<main class="page">
+<main class="container">
   {{ content }}
 </main>
 
