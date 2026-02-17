@@ -1,0 +1,145 @@
+---
+layout: default
+title: "Room Rentals"
+permalink: /room-rentals/
+---
+
+<style>
+  .rentals { max-width: 1100px; margin: 0 auto; padding: 28px 15px; font-family: "Nunito", system-ui, sans-serif; }
+  .rentals h1 { margin: 10px 0 18px; font-weight: 700; }
+  .rentals .lead { color:#444; font-size: 1.05rem; line-height: 1.6; max-width: 75ch; }
+
+  .room-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:18px; margin-top: 18px; }
+  @media (max-width: 900px){ .room-grid { grid-template-columns: 1fr; } }
+
+  .room-card { display:grid; grid-template-columns: 180px 1fr; gap:14px; border:1px solid #eee; border-radius:12px; background:#fff; padding:12px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+  @media (max-width: 520px){ .room-card { grid-template-columns: 1fr; } }
+
+  .room-media img { width:100%; height:140px; object-fit:cover; border-radius:10px; background:#f6f6f6; }
+  .room-media-fallback { height:140px; border-radius:10px; background:#f6f6f6; display:flex; align-items:center; justify-content:center; color:#777; }
+
+  .room-title { margin:0 0 6px; font-size: 1.1rem; font-weight: 800; }
+  .room-subtitle { margin:0 0 8px; color:#555; }
+  .room-meta { display:flex; flex-wrap:wrap; gap:10px; color:#333; font-size:.95rem; margin-bottom: 10px; }
+  .room-amenities { margin:0 0 10px; padding-left: 18px; color:#444; }
+  .room-rates { border-top:1px solid #eee; padding-top:10px; margin-top:10px; }
+  .rate-line { display:flex; gap:10px; align-items:baseline; justify-content:space-between; }
+  .rate-label { font-weight:700; color:#111; }
+  .rate-price { color:#0D5295; font-weight:800; }
+  .rate-min { color:#777; font-size:.9rem; }
+
+  .btn-room { display:inline-block; margin-top:10px; border:1px solid #6495ED; color:#6495ED; padding:6px 10px; border-radius:8px; text-decoration:none; font-weight:700; }
+  .btn-room:hover { text-decoration: underline; }
+
+  .panel { margin-top: 26px; border:1px solid #eee; border-radius:12px; padding:16px; background:#fff; }
+  .panel h2 { margin:0 0 10px; font-weight:800; font-size: 1.05rem; }
+  .muted { color:#666; }
+  .two-col { display:grid; grid-template-columns: 1.2fr .8fr; gap:16px; }
+  @media (max-width: 900px){ .two-col { grid-template-columns: 1fr; } }
+
+  .form-row { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  @media (max-width: 700px){ .form-row { grid-template-columns: 1fr; } }
+
+  input, select, textarea { width:100%; padding:10px; border:1px solid #ddd; border-radius:10px; }
+  textarea { min-height: 110px; }
+  .submit { background:#0D5295; color:#fff; border:none; padding:10px 14px; border-radius:10px; font-weight:800; }
+</style>
+
+<section class="rentals">
+  <h1>Room Rentals</h1>
+  <p class="lead">
+    Rent a room for meetings, community events, workshops, celebrations, and more.
+    Browse room features and submit a request below.
+  </p>
+
+  {%- assign rooms = site.data.smcc_rooms | default: "" | split: "" -%}
+
+  <div class="room-grid">
+    {%- for r in rooms -%}
+      {%- include room_card.html room=r -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="panel">
+    <h2>Terms & policies</h2>
+    <ul class="muted" style="margin:0; padding-left:18px;">
+      <li>Minimum booking time varies by room (see rates).</li>
+      <li>Cancellations: __ days prior for full refund (edit this to your policy).</li>
+      <li>Set-up/clean-up expectations will be confirmed in the booking agreement.</li>
+    </ul>
+  </div>
+
+  <div id="rental-request" class="panel">
+    <h2>Room rental request</h2>
+    <div class="two-col">
+      <div>
+        <p class="muted" style="margin-top:0;">
+          Submit a request and our Rentals team will confirm availability and pricing.
+        </p>
+
+        <!-- Option A: simple mailto (fastest) -->
+        <p><strong>Questions?</strong> Email: <a href="mailto:rentals@smcc.example">rentals@smcc.example</a></p>
+
+        <!-- Option B: embed a form service later (Google Form / Jotform / etc.) -->
+        <form>
+          <div class="form-row">
+            <div>
+              <label>Name</label>
+              <input type="text" placeholder="Your name">
+            </div>
+            <div>
+              <label>Email</label>
+              <input type="email" placeholder="you@email.com">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:10px;">
+            <div>
+              <label>Requested room</label>
+              <select id="roomSelect">
+                <option value="">Select a room…</option>
+                {%- for r in rooms -%}
+                  <option value="{{ r.name | escape }}">{{ r.name }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+            <div>
+              <label>Date / time (preferred)</label>
+              <input type="text" placeholder="e.g., Sat May 10, 2–6pm">
+            </div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <label>Event details</label>
+            <textarea placeholder="Event type, expected attendance, setup needs…"></textarea>
+          </div>
+
+          <div style="margin-top:12px;">
+            <button class="submit" type="button">Submit request</button>
+            <span class="muted" style="margin-left:10px;">(Wire this to your form backend later)</span>
+          </div>
+        </form>
+      </div>
+
+      <aside class="muted">
+        <strong>What happens next</strong>
+        <ol style="padding-left:18px; margin-top:8px;">
+          <li>We confirm availability and any staffing requirements.</li>
+          <li>We send a booking agreement and payment instructions.</li>
+          <li>Your booking is confirmed once payment is received.</li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  // If user clicks “Request this room”, preselect that room in the dropdown.
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a[data-room]');
+    if(!a) return;
+    const room = a.getAttribute('data-room');
+    const sel = document.getElementById('roomSelect');
+    if(sel && room) sel.value = room;
+  });
+</script>
