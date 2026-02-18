@@ -14,9 +14,7 @@ highlights:
     text: "Flexible rooms for meetings, celebrations, classes, and community initiatives."
   - title: Volunteer-Driven
     text: "Operated by dedicated volunteers committed to serving the local community."
-  - title: Inclusive Environment
-    text: "Open to individuals and organizations of all backgrounds."
-
+    
 address_line: "Ottawa, ON"
 street_line: "123 Example St."
 phone: "613-000-0000"
