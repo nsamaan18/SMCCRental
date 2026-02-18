@@ -41,6 +41,8 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     overflow: hidden;
     border: 1px solid var(--border);
     background: #f7f7f7;
+    position: relative; /* Ensure stacking context */
+    z-index: 1; /* Lower z-index to prevent overlapping menu */
   }
   .slider{
     position: relative;
