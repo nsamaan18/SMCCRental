@@ -112,11 +112,10 @@
 <header class="nav">
   <div class="nav-inner" id="navInner">
     <div class="logo-container">
-      <img src="/assets/images/main/slides/slider1.jpg" alt="St. Mary Community Centre Logo" class="logo-img">
-      <div class="logo-text">
-        <h1 class="logo-name">SMCC</h1>
-        <p class="logo-verse">"For where two or three gather in my name, there am I with them." — Matthew 18:20</p>
-      </div>
+      <a href="{{ '/' | relative_url }}">
+        <img class="logo-img" src="{{ '/assets/images/main/slides/slider1.jpg' | relative_url }}" alt="St. Mary Community Centre Logo">
+      </a>
+      <span class="logo-text">SMCC</span>
     </div>
     <!-- Hamburger -->
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
