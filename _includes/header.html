@@ -1,15 +1,106 @@
-<nav class="smcc-nav">
-  <div class="nav-rail">
-    <div class="nav-brand">SMCC</div>
+<nav class="navbar navbar-default" role="navigation" aria-label="Main navigation"
+     style="background:#ffffff;border:0;margin:0;">
+  <div class="nav-rail"
+       style="max-width:1100px;margin:0 auto;padding:0 15px;">
 
-    <ul class="nav-menu">
-      <li><a href="{{ '/' | relative_url }}">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Community</a></li>
-      <li><a href="{{ '/rentals/' | relative_url }}">Room Rental</a></li>
-      <li><a href="#">Media</a></li>
-      <li><a href="#">Donate</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
+    <!-- Brand + toggle grouped for mobile -->
+    <div class="navbar-header">
+      <!-- Hamburger -->
+      <button type="button"
+              class="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#smcc-navbar"
+              aria-expanded="false"
+              aria-controls="smcc-navbar"
+              style="margin-top:18px; margin-right:0;">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <!-- Brand -->
+      <a class="navbar-brand"
+         href="{{ '/' | relative_url }}"
+         style="color:#0D5295 !important;font-weight:800;font-family:'Nunito',sans-serif;
+                font-size:clamp(26px,3vw,34px);line-height:1;padding:16px 0;">
+        SMCC
+      </a>
+    </div>
+
+    <!-- Collapsible menu -->
+    <div class="collapse navbar-collapse" id="smcc-navbar">
+      <ul class="nav navbar-nav navbar-right"
+          style="margin:0; padding:0; white-space:nowrap;">
+        <li {% if page.url == '/' or page.url contains '/home' %}class="active"{% endif %}>
+          <a href="{{ '/' | relative_url }}">Home</a>
+        </li>
+        <li {% if page.url contains '/about/' %}class="active"{% endif %}>
+          <a href="{{ '/about/' | relative_url }}">About</a>
+        </li>
+        <li {% if page.url contains '/community/' %}class="active"{% endif %}>
+          <a href="{{ '/community/' | relative_url }}">Community</a>
+        </li>
+        <li {% if page.url contains '/rental/' %}class="active"{% endif %}>
+          <a href="{{ '/rental/' | relative_url }}">Rental</a>
+        </li>
+        <li {% if page.url contains '/media/' %}class="active"{% endif %}>
+          <a href="{{ '/media/' | relative_url }}">Media</a>
+        </li>
+        <li {% if page.url contains '/donate/' %}class="active"{% endif %}>
+          <a href="{{ '/donate/' | relative_url }}">Donate</a>
+        </li>
+        <li {% if page.url contains '/contact/' %}class="active"{% endif %}>
+          <a href="{{ '/contact/' | relative_url }}">Contact</a>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </nav>
+
+<style>
+  /* Make Bootstrap 3 collapse behave cleanly with your typography */
+  nav[aria-label="Main navigation"] .navbar-nav > li > a{
+    font-family:'Nunito',sans-serif;
+    font-weight:600;
+    color:#777 !important;
+    background:transparent !important;
+    padding:18px 14px 10px;
+    line-height:1.2;
+    text-decoration:none !important;
+  }
+
+  nav[aria-label="Main navigation"] .navbar-nav > li > a:hover,
+  nav[aria-label="Main navigation"] .navbar-nav > li > a:focus{
+    color:#000 !important;
+    text-decoration:none !important;
+  }
+
+  /* Active = black + underline */
+  nav[aria-label="Main navigation"] .navbar-nav > li.active > a,
+  nav[aria-label="Main navigation"] .navbar-nav > li.active > a:hover,
+  nav[aria-label="Main navigation"] .navbar-nav > li.active > a:focus{
+    color:#000 !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    background:transparent !important;
+  }
+
+  /* Mobile dropdown styling */
+  @media (max-width: 767px){
+    nav[aria-label="Main navigation"] .navbar-collapse{
+      border-top: 1px solid #eee;
+      margin-top: 8px;
+    }
+    nav[aria-label="Main navigation"] .navbar-nav{
+      float:none !important;
+      margin: 0;
+    }
+    nav[aria-label="Main navigation"] .navbar-nav > li > a{
+      padding: 14px 0;
+      white-space: normal;
+    }
+  }
+</style>
