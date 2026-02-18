@@ -1,11 +1,32 @@
-title: SMCC
-description: St. Mary Community Centre
+title: SMCC Rental
+description: St. Mary Community Centre – Room Rentals and Community Programs
 url: "https://nsamaan18.github.io"
 baseurl: "/SMCCRental"
+
+# Build settings
 markdown: kramdown
 theme: null
 
+# Enable the _pages folder as a collection
 collections:
   pages:
     output: true
     permalink: /:name/
+
+# Defaults so every page in _pages uses your layout automatically
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+# Include assets and pages
+include:
+  - _pages
+
+# Exclude files from build
+exclude:
+  - README.md
+  - node_modules
+  - vendor
