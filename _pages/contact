@@ -1,0 +1,228 @@
+---
+layout: default
+title: Contact
+permalink: /contact/
+nav: contact
+# Hero banner image (optional)
+hero_image: /images/contact/hero-contact.jpg
+hero_alt: Contact Us at SMCC
+# Contact details (edit these)
+email: info@smccottawa.org
+phone: "613-000-0000"
+address: "1 Canfield St, Ottawa, ON"
+# Google Map embed src (get from Google Maps: Share > Embed a map)
+map_embed_src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2800.123456789!2d-75.123456789!3d45.123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDUuMTIzNDU2Nzg5LC03NS4xMjM0NTY3ODk!5e0!3m2!1sen!2sca!4v1234567890"
+# Formspree endpoint (sign up at formspree.io for your own)
+form_endpoint: "https://formspree.io/f/YOUR_FORMSPREE_ID"
+---
+<style>
+  /* Reuse homepage vars for consistency */
+  :root {
+    --ink: #111;
+    --muted: #666;
+    --border: #e9e9e9;
+    --card: #fff;
+    --blue: #0D5295;
+    --lightblue: #6495ED;
+    --radius: 14px;
+  }
+  .smcc-contact {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 0 40px;
+    font-family: "Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--ink);
+  }
+  /* Hero */
+  .hero {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #f7f7f7;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .hero img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+  }
+  .hero-title {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 800;
+    text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  }
+  /* Grid for form + map */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 22px;
+  }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .panel {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 14px;
+  }
+  .panel h2 {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 2px 0 12px;
+  }
+  /* Contact Info */
+  .info-list {
+    display: grid;
+    gap: 10px;
+  }
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .info-item strong {
+    color: var(--blue);
+  }
+  .info-item a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .info-item a:hover {
+    text-decoration: underline;
+  }
+  /* Form */
+  form {
+    display: grid;
+    gap: 12px;
+  }
+  label {
+    font-weight: 700;
+    font-size: 14px;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+  }
+  button {
+    background: var(--lightblue);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  button:hover {
+    background: var(--blue);
+  }
+  /* Map */
+  .map-wrap {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .map-wrap iframe {
+    width: 100%;
+    height: 400px;
+    border: 0;
+  }
+  @media (max-width: 900px) {
+    .map-wrap iframe { height: 300px; }
+  }
+  /* CTA */
+  .cta-row {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .cta {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--lightblue);
+    color: var(--lightblue);
+    text-decoration: none;
+    font-weight: 800;
+    background: #fff;
+  }
+  .cta:hover {
+    background: var(--lightblue);
+    color: #fff;
+  }
+</style>
+
+<section class="smcc-contact">
+  <!-- Hero -->
+  <div class="hero">
+    {% if page.hero_image %}
+      <img src="{{ page.hero_image | relative_url }}" alt="{{ page.hero_alt | default: 'Contact SMCC' }}">
+    {% endif %}
+    <h1 class="hero-title">Get in Touch</h1>
+  </div>
+
+  <!-- Contact Info -->
+  <div class="panel" style="margin-top: 22px;">
+    <h2>Contact Information</h2>
+    <div class="info-list">
+      <div class="info-item">
+        <strong>Address:</strong> {{ page.address | default: "1 Canfield St, Ottawa, ON" }}
+      </div>
+      <div class="info-item">
+        <strong>Phone:</strong> <a href="tel:{{ page.phone | replace: ' ', '' | replace: '-', '' }}">{{ page.phone | default: "613-000-0000" }}</a>
+      </div>
+      <div class="info-item">
+        <strong>Email:</strong> <a href="mailto:{{ page.email | default: 'info@smccottawa.org' }}">{{ page.email | default: "info@smccottawa.org" }}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form + Map Grid -->
+  <div class="grid">
+    <!-- Contact Form -->
+    <div class="panel">
+      <h2>Send Us a Message</h2>
+      <form action="{{ page.form_endpoint }}" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        
+        <button type="submit">Submit</button>
+      </form>
+      <p style="font-size: 13px; color: var(--muted); margin-top: 10px;">We'll get back to you soon!</p>
+    </div>
+
+    <!-- Google Map -->
+    <div class="panel">
+      <h2>Our Location</h2>
+      <div class="map-wrap">
+        <iframe src="{{ page.map_embed_src }}" title="SMCC Location Map" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p style="font-size: 13px; color: var(--muted); margin-top: 10px;">Tip: Get embed code from Google Maps for your exact address.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-row">
+    <a class="cta" href="{{ '/donate/' | relative_url }}">Donate</a>
+    <a class="cta" href="{{ '/' | relative_url }}">Back to Home</a>
+  </div>
+</section>
