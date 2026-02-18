@@ -1,29 +1,26 @@
 <nav class="navbar navbar-default" role="navigation" aria-label="Main navigation"
-     style="background:#ffffff;border:0;margin:0;">
-  <div class="nav-rail"
-       style="max-width:1100px;margin:0 auto;padding:0 15px;">
+     style="background:#ffffff;border-bottom:0;margin-bottom:0;">
+  <div class="container-fluid" style="max-width:1100px;margin:0 auto;padding:0 15px;">
 
-    <!-- Brand + toggle grouped for mobile -->
+    <!-- Mobile header: brand + hamburger -->
     <div class="navbar-header">
-      <!-- Hamburger -->
       <button type="button"
               class="navbar-toggle collapsed"
               data-toggle="collapse"
               data-target="#smcc-navbar"
               aria-expanded="false"
               aria-controls="smcc-navbar"
-              style="margin-top:18px; margin-right:0;">
+              style="margin-top:18px;">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
 
-      <!-- Brand -->
       <a class="navbar-brand"
          href="{{ '/' | relative_url }}"
          style="color:#0D5295 !important;font-weight:800;font-family:'Nunito',sans-serif;
-                font-size:clamp(26px,3vw,34px);line-height:1;padding:16px 0;">
+                font-size:clamp(22px,3.2vw,34px);line-height:1;padding:18px 0;">
         SMCC
       </a>
     </div>
@@ -31,26 +28,33 @@
     <!-- Collapsible menu -->
     <div class="collapse navbar-collapse" id="smcc-navbar">
       <ul class="nav navbar-nav navbar-right"
-          style="margin:0; padding:0; white-space:nowrap;">
-        <li {% if page.url == '/' or page.url contains '/home' %}class="active"{% endif %}>
+          style="margin:0; padding:0;">
+
+        <li {% if page.url == '/' or page.nav == 'home' %}class="active"{% endif %}>
           <a href="{{ '/' | relative_url }}">Home</a>
         </li>
-        <li {% if page.url contains '/about/' %}class="active"{% endif %}>
+
+        <li {% if page.url contains '/about/' or page.nav == 'about' %}class="active"{% endif %}>
           <a href="{{ '/about/' | relative_url }}">About</a>
         </li>
-        <li {% if page.url contains '/community/' %}class="active"{% endif %}>
+
+        <li {% if page.url contains '/community/' or page.nav == 'community' %}class="active"{% endif %}>
           <a href="{{ '/community/' | relative_url }}">Community</a>
         </li>
-        <li {% if page.url contains '/rental/' %}class="active"{% endif %}>
+
+        <li {% if page.url contains '/rental/' or page.nav == 'rental' %}class="active"{% endif %}>
           <a href="{{ '/rental/' | relative_url }}">Rental</a>
         </li>
-        <li {% if page.url contains '/media/' %}class="active"{% endif %}>
+
+        <li {% if page.url contains '/media/' or page.nav == 'media' %}class="active"{% endif %}>
           <a href="{{ '/media/' | relative_url }}">Media</a>
         </li>
-        <li {% if page.url contains '/donate/' %}class="active"{% endif %}>
+
+        <li {% if page.url contains '/donate/' or page.nav == 'donate' %}class="active"{% endif %}>
           <a href="{{ '/donate/' | relative_url }}">Donate</a>
         </li>
-        <li {% if page.url contains '/contact/' %}class="active"{% endif %}>
+
+        <li {% if page.url contains '/contact/' or page.nav == 'contact' %}class="active"{% endif %}>
           <a href="{{ '/contact/' | relative_url }}">Contact</a>
         </li>
       </ul>
@@ -60,47 +64,27 @@
 </nav>
 
 <style>
-  /* Make Bootstrap 3 collapse behave cleanly with your typography */
+  /* Make links look like your GurjaoLab style */
   nav[aria-label="Main navigation"] .navbar-nav > li > a{
-    font-family:'Nunito',sans-serif;
-    font-weight:600;
     color:#777 !important;
     background:transparent !important;
-    padding:18px 14px 10px;
-    line-height:1.2;
+    font-family:'Nunito',sans-serif;
+    font-weight:600;
     text-decoration:none !important;
+    padding-top:18px;
+    padding-bottom:18px;
   }
-
   nav[aria-label="Main navigation"] .navbar-nav > li > a:hover,
   nav[aria-label="Main navigation"] .navbar-nav > li > a:focus{
     color:#000 !important;
-    text-decoration:none !important;
   }
-
-  /* Active = black + underline */
   nav[aria-label="Main navigation"] .navbar-nav > li.active > a,
   nav[aria-label="Main navigation"] .navbar-nav > li.active > a:hover,
   nav[aria-label="Main navigation"] .navbar-nav > li.active > a:focus{
     color:#000 !important;
-    text-decoration: underline !important;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
+    text-decoration:underline !important;
+    text-decoration-thickness:2px;
+    text-underline-offset:6px;
     background:transparent !important;
-  }
-
-  /* Mobile dropdown styling */
-  @media (max-width: 767px){
-    nav[aria-label="Main navigation"] .navbar-collapse{
-      border-top: 1px solid #eee;
-      margin-top: 8px;
-    }
-    nav[aria-label="Main navigation"] .navbar-nav{
-      float:none !important;
-      margin: 0;
-    }
-    nav[aria-label="Main navigation"] .navbar-nav > li > a{
-      padding: 14px 0;
-      white-space: normal;
-    }
   }
 </style>
