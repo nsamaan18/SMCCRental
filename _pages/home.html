@@ -2,4 +2,384 @@
 layout: default
 title: Home
 permalink: /
+nav: home
+
+# ====== HERO SLIDER (edit these paths) ======
+slider_images:
+  - /assets/images/slider/slide-1.jpg
+  - /assets/images/slider/slide-2.jpg
+  - /assets/images/slider/slide-3.jpg
+
+# ====== ADDRESS STRIP ======
+site_name: "St. Mary Community Centre"
+address_line: "Ottawa, ON"
+street_line: "123 Example St."
+phone: "613-000-0000"
+
+# ====== GOOGLE CALENDAR EMBED ======
+# Replace the src with your calendar embed URL
+# Tip: Google Calendar -> Settings -> Integrate calendar -> "Embed code"
+calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID%40group.calendar.google.com&ctz=America%2FToronto"
 ---
+
+<style>
+  :root{
+    --ink:#111;
+    --muted:#666;
+    --border:#e9e9e9;
+    --card:#fff;
+    --blue:#0D5295;
+    --lightblue:#6495ED;
+    --radius:14px;
+  }
+
+  .smcc-home{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 0 40px;
+    font-family: "Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--ink);
+  }
+
+  /* ===== HERO SLIDER ===== */
+  .hero{
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #f7f7f7;
+  }
+  .slider{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/6;  /* wide banner */
+    min-height: 220px;
+    max-height: 420px;
+  }
+  @media (max-width: 768px){
+    .slider{ aspect-ratio: 16/9; }
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition: opacity .6s ease;
+  }
+  .slide.is-active{ opacity:1; }
+  .slide img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    display:block;
+  }
+  .slider-ui{
+    position:absolute;
+    inset:auto 0 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding: 12px 12px;
+    background: linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0));
+  }
+  .slider-title{
+    color:#fff;
+    font-weight:700;
+    text-shadow: 0 2px 8px rgba(0,0,0,.35);
+    font-size: clamp(18px, 2.2vw, 26px);
+    margin:0;
+    line-height:1.15;
+  }
+  .slider-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .btn{
+    appearance:none;
+    border:1px solid rgba(255,255,255,.8);
+    background: rgba(255,255,255,.12);
+    color:#fff;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-weight:700;
+    cursor:pointer;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .btn:hover{ background: rgba(255,255,255,.22); transform: translateY(-1px); }
+  .dots{ display:flex; gap:6px; }
+  .dot{
+    width:8px; height:8px; border-radius:999px;
+    background: rgba(255,255,255,.45);
+    border: 1px solid rgba(255,255,255,.65);
+    cursor:pointer;
+  }
+  .dot.is-active{ background: #fff; }
+
+  /* ===== ADDRESS STRIP ===== */
+  .address-strip{
+    margin-top: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    align-items: center;
+  }
+  .address-strip .name{
+    font-weight: 800;
+    color: var(--blue);
+    letter-spacing: .2px;
+  }
+  .address-strip .sep{ color: #bbb; }
+  .address-strip a{
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .address-strip a:hover{ border-bottom-color: var(--ink); }
+
+  /* ===== TWO-COLUMN: NEWS + CALENDAR ===== */
+  .grid{
+    margin-top: 22px;
+    display:grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 18px;
+  }
+  @media (max-width: 900px){
+    .grid{ grid-template-columns: 1fr; }
+  }
+
+  .panel{
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 14px 14px;
+  }
+  .panel h2{
+    margin: 2px 0 12px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  /* NEWS list like cards */
+  .news-list{
+    display:grid;
+    gap: 10px;
+    max-height: 420px;
+    overflow:auto;
+    padding-right: 4px;
+  }
+  @media (max-width: 900px){
+    .news-list{ max-height: 280px; }
+  }
+  .news-item{
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: #fff;
+  }
+  .news-item .headline{
+    font-weight: 800;
+    margin: 0 0 4px;
+    line-height: 1.25;
+  }
+  .news-item .headline a{
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .news-item .headline a:hover{ text-decoration: underline; }
+  .news-item .date{
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .news-item p{ margin:0; color:#222; }
+
+  /* CALENDAR embed */
+  .cal-wrap{
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .cal-wrap iframe{
+    width:100%;
+    height: 420px;
+    border:0;
+    display:block;
+  }
+  @media (max-width: 900px){
+    .cal-wrap iframe{ height: 520px; }
+  }
+
+  /* Simple CTA row (optional) */
+  .cta-row{
+    margin-top: 18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .cta{
+    display:inline-block;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--lightblue);
+    color: var(--lightblue);
+    text-decoration:none;
+    font-weight:800;
+    background:#fff;
+  }
+  .cta:hover{
+    background: var(--lightblue);
+    color:#fff;
+  }
+</style>
+
+<section class="smcc-home">
+
+  <!-- HERO SLIDER -->
+  <div class="hero">
+    <div class="slider" id="smccSlider" aria-label="SMCC image slider">
+      {% assign slides = page.slider_images | default: "" | split: "" %}
+      {% if slides and slides.size > 0 %}
+        {% for img in slides %}
+          <div class="slide {% if forloop.first %}is-active{% endif %}">
+            <img src="{{ img | relative_url }}" alt="SMCC slide {{ forloop.index }}">
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="slide is-active">
+          <img src="{{ '/assets/images/slider/placeholder.jpg' | relative_url }}" alt="SMCC placeholder slide">
+        </div>
+      {% endif %}
+
+      <div class="slider-ui">
+        <h1 class="slider-title">{{ page.site_name | default: "St. Mary Community Centre" }}</h1>
+        <div class="slider-actions">
+          <button class="btn" type="button" data-prev aria-label="Previous slide">‹</button>
+          <div class="dots" aria-label="Slide selector"></div>
+          <button class="btn" type="button" data-next aria-label="Next slide">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADDRESS STRIP -->
+  <div class="address-strip" aria-label="Location and contact">
+    <span class="name">{{ page.site_name | default: "St. Mary Community Centre" }}</span>
+    <span class="sep">|</span>
+    <span>{{ page.street_line | default: "Street address here" }}</span>
+    <span>{{ page.address_line | default: "City, Province" }}</span>
+    <span class="sep">|</span>
+    {% if page.phone %}
+      <a href="tel:{{ page.phone | replace: ' ', '' | replace: '-', '' }}">{{ page.phone }}</a>
+    {% endif %}
+  </div>
+
+  <!-- NEWS + CALENDAR -->
+  <div class="grid">
+
+    <!-- NEWS -->
+    <div class="panel">
+      <h2>News & Updates</h2>
+
+      {% assign news_items = site.data.news | default: site.data.smcc_news | default: "" | split: "" %}
+      {% if news_items and news_items.size > 0 %}
+        {% assign items_sorted = news_items | sort: "date" | reverse %}
+        <div class="news-list">
+          {% for n in items_sorted %}
+            <div class="news-item">
+              <div class="headline">
+                {% if n.link %}
+                  <a href="{{ n.link }}" target="_blank" rel="noopener">{{ n.headline }}</a>
+                {% else %}
+                  {{ n.headline }}
+                {% endif %}
+              </div>
+              {% if n.date %}
+                <div class="date">{{ n.date | date: "%b %-d, %Y" }}</div>
+              {% endif %}
+              {% if n.body %}
+                <p>{{ n.body }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p style="color:var(--muted); margin:0;">
+          Add a news data file (recommended: <code>_data/smcc_news.yml</code>) with fields:
+          <code>headline</code>, <code>date</code>, <code>body</code>, optional <code>link</code>.
+        </p>
+      {% endif %}
+
+      <div class="cta-row">
+        <a class="cta" href="{{ '/rentals/' | relative_url }}">Room Rentals</a>
+        <a class="cta" href="{{ '/contact/' | relative_url }}">Contact</a>
+        <a class="cta" href="{{ '/donate/' | relative_url }}">Donate</a>
+      </div>
+    </div>
+
+    <!-- GOOGLE CALENDAR -->
+    <div class="panel">
+      <h2>Calendar</h2>
+      <div class="cal-wrap">
+        <iframe
+          title="SMCC Google Calendar"
+          src="{{ page.calendar_embed_src }}"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <p style="margin:10px 0 0; color:var(--muted); font-size: 13px;">
+        Tip: In Google Calendar settings, use “Integrate calendar → Embed code” to get the correct <code>src</code>.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function(){
+  const root = document.getElementById('smccSlider');
+  if(!root) return;
+
+  const slides = Array.from(root.querySelectorAll('.slide'));
+  const dotsWrap = root.querySelector('.dots');
+  const btnPrev = root.querySelector('[data-prev]');
+  const btnNext = root.querySelector('[data-next]');
+
+  if(slides.length <= 1) return;
+
+  let idx = 0;
+  const dots = slides.map((_, i) => {
+    const d = document.createElement('button');
+    d.type = 'button';
+    d.className = 'dot' + (i === 0 ? ' is-active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i+1));
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+    return d;
+  });
+
+  function render(){
+    slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+  }
+
+  function go(i){
+    idx = (i + slides.length) % slides.length;
+    render();
+  }
+
+  btnPrev && btnPrev.addEventListener('click', () => go(idx - 1));
+  btnNext && btnNext.addEventListener('click', () => go(idx + 1));
+
+  // Auto-rotate (pause on hover)
+  let timer = setInterval(() => go(idx + 1), 5500);
+  root.addEventListener('mouseenter', () => { clearInterval(timer); });
+  root.addEventListener('mouseleave', () => { timer = setInterval(() => go(idx + 1), 5500); });
+})();
+</script>
