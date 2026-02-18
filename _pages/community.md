@@ -116,9 +116,16 @@ nav: community
     <p>Discover programs, celebrations, and gatherings happening at SMCC.</p>
   </div>
 
-  {% assign today = "now" | date: "%Y-%m-%d" %}
-  {% assign upcoming = site.data.events | where_exp: "e", "e.date >= today" | sort: "date" %}
-  {% assign past = site.data.events | where_exp: "e", "e.date < today" | sort: "date" | reverse %}
+  {%- assign today_ts = "now" | date: "%s" | plus: 0 -%}
+  {%- assign upcoming = site.data.events
+      | where_exp: "e", "e.date and (e.date | date: '%s' | plus: 0) >= today_ts"
+      | sort: "date"
+  -%}
+  {%- assign past = site.data.events
+      | where_exp: "e", "e.date and (e.date | date: '%s' | plus: 0) < today_ts"
+      | sort: "date"
+      | reverse
+  -%}
 
   {% if upcoming.size > 0 %}
     <div class="section-title">Upcoming Events</div>
