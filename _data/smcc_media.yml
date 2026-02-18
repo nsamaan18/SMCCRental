@@ -1,1 +1,17 @@
-
+photos:
+  - src: /images/media/photo1.jpg
+    alt: Community event 2023
+    caption: Annual fundraiser
+  - src: /images/media/photo2.jpg
+    alt: Centre interior
+    caption: Newly renovated hall
+videos:
+  - embed: https://www.youtube.com/embed/VIDEO_ID_HERE
+    title: Event Highlight Video
+  - embed: https://www.youtube.com/embed/ANOTHER_ID
+    title: Testimonial
+press:
+  - headline: "Local News Feature"
+    date: 2023-05-15
+    link: https://example.com/article
+    excerpt: "SMCC in the spotlight..."
