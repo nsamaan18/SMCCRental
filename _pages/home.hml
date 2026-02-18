@@ -3,26 +3,21 @@ layout: default
 title: Home
 permalink: /
 nav: home
-
 # ====== HERO SLIDER (edit these paths) ======
 slider_images:
-   - /images/main/slides/slider1.jpg
   - /images/main/slides/slider1.jpg
   - /images/main/slides/slider2.jpg
   - /images/main/slides/slider3.jpg
-
 # ====== ADDRESS STRIP ======
 site_name: "St. Mary Community Centre"
 address_line: "Ottawa, ON"
 street_line: "1 Canfield St"
 phone: "613-000-0000"
-
 # ====== GOOGLE CALENDAR EMBED ======
 # Replace the src with your calendar embed URL
 # Tip: Google Calendar -> Settings -> Integrate calendar -> "Embed code"
 calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID%40group.calendar.google.com&ctz=America%2FToronto"
 ---
-
 <style>
   :root{
     --ink:#111;
@@ -33,7 +28,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     --lightblue:#6495ED;
     --radius:14px;
   }
-
   .smcc-home{
     max-width: 1100px;
     margin: 0 auto;
@@ -41,7 +35,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     font-family: "Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color: var(--ink);
   }
-
   /* ===== HERO SLIDER ===== */
   .hero{
     border-radius: var(--radius);
@@ -52,7 +45,7 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
   .slider{
     position: relative;
     width: 100%;
-    aspect-ratio: 16/6;  /* wide banner */
+    aspect-ratio: 16/6; /* wide banner */
     min-height: 220px;
     max-height: 420px;
   }
@@ -115,7 +108,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     cursor:pointer;
   }
   .dot.is-active{ background: #fff; }
-
   /* ===== ADDRESS STRIP ===== */
   .address-strip{
     margin-top: 14px;
@@ -140,7 +132,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     border-bottom: 1px solid transparent;
   }
   .address-strip a:hover{ border-bottom-color: var(--ink); }
-
   /* ===== TWO-COLUMN: NEWS + CALENDAR ===== */
   .grid{
     margin-top: 22px;
@@ -151,7 +142,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
   @media (max-width: 900px){
     .grid{ grid-template-columns: 1fr; }
   }
-
   .panel{
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -164,7 +154,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     font-weight: 800;
     color: var(--ink);
   }
-
   /* NEWS list like cards */
   .news-list{
     display:grid;
@@ -198,7 +187,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     margin-bottom: 6px;
   }
   .news-item p{ margin:0; color:#222; }
-
   /* CALENDAR embed */
   .cal-wrap{
     border: 1px solid var(--border);
@@ -215,7 +203,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
   @media (max-width: 900px){
     .cal-wrap iframe{ height: 520px; }
   }
-
   /* Simple CTA row (optional) */
   .cta-row{
     margin-top: 18px;
@@ -238,14 +225,15 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     color:#fff;
   }
 </style>
-
 <section class="smcc-home">
-
   <!-- HERO SLIDER -->
   <div class="hero">
     <div class="slider" id="smccSlider" aria-label="SMCC image slider">
-      {% assign slides = page.slider_images | default: "" | split: "" %}
-      {% if slides and slides.size > 0 %}
+      {% assign slides = page.slider_images %}
+      {% unless slides %}
+        {% assign slides = "" | split: "," %}
+      {% endunless %}
+      {% if slides.size > 0 %}
         {% for img in slides %}
           <div class="slide {% if forloop.first %}is-active{% endif %}">
             <img src="{{ img | relative_url }}" alt="SMCC slide {{ forloop.index }}">
@@ -256,7 +244,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
           <img src="{{ '/assets/images/slider/placeholder.jpg' | relative_url }}" alt="SMCC placeholder slide">
         </div>
       {% endif %}
-
       <div class="slider-ui">
         <h1 class="slider-title">{{ page.site_name | default: "St. Mary Community Centre" }}</h1>
         <div class="slider-actions">
@@ -267,7 +254,6 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
       </div>
     </div>
   </div>
-
   <!-- ADDRESS STRIP -->
   <div class="address-strip" aria-label="Location and contact">
     <span class="name">{{ page.site_name | default: "St. Mary Community Centre" }}</span>
@@ -279,23 +265,24 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
       <a href="tel:{{ page.phone | replace: ' ', '' | replace: '-', '' }}">{{ page.phone }}</a>
     {% endif %}
   </div>
-
   <!-- NEWS + CALENDAR -->
   <div class="grid">
-
     <!-- NEWS -->
     <div class="panel">
       <h2>News & Updates</h2>
-
-      {% assign news_items = site.data.news | default: site.data.smcc_news | default: "" | split: "" %}
-      {% if news_items and news_items.size > 0 %}
+      {% assign news_items_temp = site.data.news | default: site.data.smcc_news %}
+      {% assign news_items = news_items_temp %}
+      {% unless news_items %}
+        {% assign news_items = "" | split: "," %}
+      {% endunless %}
+      {% if news_items.size > 0 %}
         {% assign items_sorted = news_items | sort: "date" | reverse %}
         <div class="news-list">
           {% for n in items_sorted %}
             <div class="news-item">
               <div class="headline">
                 {% if n.link %}
-                  <a href="{{ n.link }}" target="_blank" rel="noopener">{{ n.headline }}</a>
+                  <a href="{{ n.link }}" target="_blank" rel="noopener noreferrer">{{ n.headline }}</a>
                 {% else %}
                   {{ n.headline }}
                 {% endif %}
@@ -315,14 +302,12 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
           <code>headline</code>, <code>date</code>, <code>body</code>, optional <code>link</code>.
         </p>
       {% endif %}
-
       <div class="cta-row">
         <a class="cta" href="{{ '/rentals/' | relative_url }}">Room Rentals</a>
         <a class="cta" href="{{ '/contact/' | relative_url }}">Contact</a>
         <a class="cta" href="{{ '/donate/' | relative_url }}">Donate</a>
       </div>
     </div>
-
     <!-- GOOGLE CALENDAR -->
     <div class="panel">
       <h2>Calendar</h2>
@@ -338,22 +323,17 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
         Tip: In Google Calendar settings, use “Integrate calendar → Embed code” to get the correct <code>src</code>.
       </p>
     </div>
-
   </div>
 </section>
-
 <script>
 (function(){
   const root = document.getElementById('smccSlider');
   if(!root) return;
-
   const slides = Array.from(root.querySelectorAll('.slide'));
   const dotsWrap = root.querySelector('.dots');
   const btnPrev = root.querySelector('[data-prev]');
   const btnNext = root.querySelector('[data-next]');
-
   if(slides.length <= 1) return;
-
   let idx = 0;
   const dots = slides.map((_, i) => {
     const d = document.createElement('button');
@@ -364,20 +344,16 @@ calendar_embed_src: "https://calendar.google.com/calendar/embed?src=YOUR_CALENDA
     dotsWrap.appendChild(d);
     return d;
   });
-
   function render(){
     slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
     dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
   }
-
   function go(i){
     idx = (i + slides.length) % slides.length;
     render();
   }
-
   btnPrev && btnPrev.addEventListener('click', () => go(idx - 1));
   btnNext && btnNext.addEventListener('click', () => go(idx + 1));
-
   // Auto-rotate (pause on hover)
   let timer = setInterval(() => go(idx + 1), 5500);
   root.addEventListener('mouseenter', () => { clearInterval(timer); });
