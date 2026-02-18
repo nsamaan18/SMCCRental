@@ -3,11 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>{{ page.title }} | SMCC</title>
-
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
   <style>
     /* Minimal responsive dropdown nav without Bootstrap */
     .nav { background:#fff; border-bottom:1px solid #eee; }
@@ -20,9 +17,7 @@
       justify-content:space-between;
       gap:12px;
     }
-
     .logo{ font-weight:800; color:#0D5295; font-size:22px; line-height:1; }
-
     .nav-links{
       display:flex;
       gap:18px;
@@ -35,7 +30,6 @@
       font-weight:600;
     }
     .nav-links a:hover{ text-decoration:underline; }
-
     /* Hamburger button (hidden on desktop) */
     .nav-toggle{
       display:none;
@@ -53,12 +47,11 @@
       background:#333;
       margin:4px 0;
     }
-
     /* Mobile behavior */
     @media (max-width: 800px){
       .nav-toggle{ display:inline-flex; flex-direction:column; justify-content:center; }
       .nav-links{
-        display:none;                 /* collapsed by default */
+        display:none; /* collapsed by default */
         position:absolute;
         left:0;
         right:0;
@@ -69,12 +62,11 @@
         flex-direction:column;
         align-items:flex-start;
         gap:12px;
+        z-index: 1000; /* Ensure dropdown is above content like the slider */
       }
       .nav-inner{ position:relative; }
-
       .nav-inner.is-open .nav-links{ display:flex; }
     }
-
     /* Optional: basic page container spacing */
     .container{
       max-width:1100px;
@@ -83,20 +75,16 @@
     }
   </style>
 </head>
-
 <body>
-
 <header class="nav">
   <div class="nav-inner" id="navInner">
     <div class="logo">SMCC</div>
-
     <!-- Hamburger -->
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
     </button>
-
     <nav class="nav-links" id="navLinks">
       <a href="{{ '/' | relative_url }}">Home</a>
       <a href="{{ '/about/' | relative_url }}">About</a>
@@ -108,25 +96,20 @@
     </nav>
   </div>
 </header>
-
 <main class="container">
   {{ content }}
 </main>
-
 <script>
   // Tiny toggle script
   (function () {
     var navInner = document.getElementById('navInner');
     var btn = document.getElementById('navToggle');
-
     if (!navInner || !btn) return;
-
     btn.addEventListener('click', function () {
       var open = navInner.classList.toggle('is-open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     });
-
     // Close menu when a link is clicked (mobile UX)
     document.getElementById('navLinks').addEventListener('click', function (e) {
       if (e.target && e.target.tagName === 'A') {
@@ -137,6 +120,5 @@
     });
   })();
 </script>
-
 </body>
 </html>
